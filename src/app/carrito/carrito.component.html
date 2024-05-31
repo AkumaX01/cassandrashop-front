@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <!-- tabla del carrito -->
+  <div class="table-responsive">
+      <table class="table table-striped">
+          <thead class="bg-light">
+              <tr>
+                  <th scope="col" class="border-0">
+                      <div class="p-2 px-3 text-uppercase">Producto</div>
+                  </th>
+                  <th scope="col" class="border-0">
+                      <div class="py-2 text-uppercase">Precio</div>
+                  </th>
+                  <th scope="col" class="border-0">
+                      <div class="py-2 text-uppercase">Cantidad</div>
+                  </th>
+                  <th scope="col" class="border-0">
+                      <div class="py-2 text-uppercase">Remover</div>
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of carrito" class="align-middle">
+                  <td class="border-0">
+                      <div class="p-2 d-flex align-items-center">
+                          <img [src]="item.imagen" alt="Producto" width="70" height="70"
+                              class="img-fluid rounded shadow-sm producto-imagen mr-3">
+                          <div class="producto-info">
+                              <h5 class="mb-0">{{ item.nombre }}</h5>
+                              <span class="text-muted font-weight-normal font-italic">Category: {{ item.categoria }}</span>
+                          </div>
+                      </div>
+                  </td>
+                  <td class="border-0 align-middle"><strong>{{ item.costo | currency }}</strong></td>
+                  <td class="border-0 align-middle">
+                      <div class="input-group">
+                          <input type="number" class="form-control" [(ngModel)]="item.cantidad"
+                              (ngModelChange)="cantidadCambiada(item)">
+                      </div>
+                  </td>
+                  <td class="border-0 align-middle">
+                      <a href="#" class="text-danger button-no-border" (click)="eliminarProducto(item.id); $event.preventDefault()">
+                          <i class="bi bi-trash-fill">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                  class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                  <path
+                                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                              </svg>
+                          </i>
+                      </a>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  <!-- tabla del carrito End -->
+
+  <!-- tabla de pago final -->
+  <div class="row py-5 p-4 bg-white rounded shadow-sm">
+      <div class="col-lg-6">
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instrucciones al vendedor</div>
+          <div class="p-4">
+              <p class="font-italic mb-4">Si tienes instrucciones de entrega, escríbelas aquí:</p>
+              <textarea name="" cols="0" rows="8" class="form-control"></textarea>
+          </div>
+      </div>
+      <div class="col-lg-6">
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Total de la compra</div>
+          <div class="p-4">
+              <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+              <ul class="list-unstyled mb-4">
+                  <li class="d-flex justify-content-between py-3 border-bottom">
+                      <strong class="text-muted">Subtotal</strong>
+                      <strong>{{ getPrecioTotal() | currency }}</strong>
+                  </li>
+                  <li class="d-flex justify-content-between py-3 border-bottom">
+                      <strong class="text-muted">Precio de envío</strong>
+                      <strong>$10.00</strong>
+                  </li>
+                  <li class="d-flex justify-content-between py-3 border-bottom">
+                      <strong class="text-muted">Total</strong>
+                      <strong>{{ getPrecioTotal() + 10 | currency }}</strong>
+                  </li>
+              </ul>
+              <a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Proceder a pagar</a>
+          </div>
+      </div>
+  </div>
+  <!-- tabla de pago final End -->
+</div>

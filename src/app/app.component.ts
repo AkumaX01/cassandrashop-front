@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tienda';
+  
+  categoriaSeleccionada: string = '';
+
+  onCategoriaSeleccionada(categoria: string): void {
+    this.categoriaSeleccionada = categoria;
+  }
+  
 }

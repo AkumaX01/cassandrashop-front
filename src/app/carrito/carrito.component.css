@@ -1,0 +1,38 @@
+.producto-imagen {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .producto-info {
+    margin-left: 20px;
+  }
+  
+  .input-group {
+    width: 100px; /* Ajusta el ancho del campo de entrada */
+  }
+  
+  .btn-outline-secondary {
+    border-color: #6c757d; /* Color del borde del botón */
+    color: #6c757d; /* Color del texto del botón */
+  }
+  
+  .btn-outline-secondary:hover {
+    background-color: #6c757d; /* Cambia el color de fondo al pasar el ratón */
+    color: #fff; /* Cambia el color del texto al pasar el ratón */
+  }
+  
+  .text-danger {
+    color: #dc3545; /* Color del texto de eliminación */
+  }
+  .button-no-border {
+    border: none; /* Remueve el borde */
+    outline: none; /* Remueve el borde cuando está enfocado */
+    background: none; /* Remueve el fondo */
+    color: inherit; /* Mantiene el color del texto */
+    cursor: pointer; /* Cambia el cursor a pointer para que parezca un botón */
+    padding: 0; /* Opcional: ajusta el padding si es necesario */
+    font: inherit; /* Mantiene la fuente del texto */
+  }
+  
+
+  

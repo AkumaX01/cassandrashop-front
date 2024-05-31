@@ -1,0 +1,12 @@
+<div class="card h-100 product-card">
+  <img [src]="producto.imagen" class="card-img-top img-fixed-size" alt="Imagen del producto">
+  <div class="card-body">
+    <h5 class="card-title">{{ producto.nombre }}</h5>
+    <p class="card-text">Categoría: {{ producto.categoria }}</p>
+    <p class="card-text"> {{ producto.descripcion }}</p>
+    <p class="card-text">Precio: {{ producto.costo | currency }}</p>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="agregarAlCarrito()">Agregar al Carrito</button>
+    </div>
+  </div>
+</div>

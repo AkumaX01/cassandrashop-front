@@ -1,0 +1,39 @@
+/* Estilos para la imagen */
+.img-fixed-size {
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+  object-position: center;
+}
+
+ /* Estilos para la tarjeta del producto */
+.product-card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex; /* Agregado para que los elementos dentro de la tarjeta se alineen correctamente */
+  flex-direction: column; /* Alinea los elementos verticalmente */
+}
+  
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    max-height: 250px;
+    object-fit: cover;
+  }
+  
+ /* Estilos para el cuerpo de la tarjeta */
+.card-body {
+  padding: 20px;
+  flex: 1; /* Ajusta el cuerpo de la tarjeta para que ocupe todo el espacio disponible */
+}
+  
+  .btn {
+    border-radius: 50px;
+  }
+  

@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  nav li {
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
