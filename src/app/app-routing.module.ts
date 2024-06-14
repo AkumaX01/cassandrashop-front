@@ -1,17 +1,26 @@
+// app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductosComponent } from './productos/productos.component';
 import { AdminComponent } from './admin/admin.component';
 import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
 import { CarritoComponent } from './carrito/carrito.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { ReportesVentasComponent } from './reportes-ventas/reportes-ventas.component';
+import { AuthGuard } from './AuthGuard';
 
 const routes: Routes = [
-  { path: 'productos', component: ProductosComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'quienes-somos', component: QuienesSomosComponent },
-  { path: 'carrito', component: CarritoComponent },
-  { path: '', redirectTo: '/productos', pathMatch: 'full' }
+  { path: 'productos', component: ProductosComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'quienes-somos', component: QuienesSomosComponent , canActivate: [AuthGuard]},
+  { path: 'carrito', component: CarritoComponent , canActivate: [AuthGuard]},
+  { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
+  { path: 'reportes', component: ReportesVentasComponent , canActivate: [AuthGuard]},
+  { path: 'login', component: LoginComponent }, // No se aplica canActivate aquí
+  { path: '', redirectTo: '/login', pathMatch: 'full' } // Redirige al login por defecto
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

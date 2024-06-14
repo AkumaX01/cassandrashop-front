@@ -5,70 +5,99 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class CarritoService {
-  
-  private cartKey = 'shoppingCart';
+  // Nombre del carrito en localStorage
+  private cartName = 'carrito_usuario_actual';
 
-  //observable para que se actualice el carrito
+  // Observable para el número de elementos en el carrito
   private cartItemCountSubject = new BehaviorSubject<number>(0);
   cartItemCount$ = this.cartItemCountSubject.asObservable();
 
-  constructor() {
-    this.loadCart();
-    this.cartItemCountSubject.next(this.getTotalItemsCount());
+  constructor() {}
+
+  // Guarda el carrito en localStorage
+  private saveCart(cart: any[]): void {
+    localStorage.setItem(this.cartName, JSON.stringify(cart));
   }
 
-  private cart: any[] = [];
-
-  private saveCart(): void {
-    localStorage.setItem(this.cartKey, JSON.stringify(this.cart));
+  // Carga el carrito desde localStorage
+  private loadCart(): any[] {
+    const savedCart = localStorage.getItem(this.cartName);
+    return savedCart ? JSON.parse(savedCart) : [];
   }
 
-  private loadCart(): void {
-    const savedCart = localStorage.getItem(this.cartKey);
-    if (savedCart) {
-      this.cart = JSON.parse(savedCart);
+  // Obtiene el carrito
+  getCart(): any[] {
+    return this.loadCart();
+  }
+
+  // Nueva función para actualizar la cantidad de un artículo en el carrito
+  updateCartItemQuantity(itemId: number, nuevaCantidad: number): void {
+    let cart = this.loadCart();
+    const existingItem = cart.find(cartItem => cartItem.id === itemId);
+
+    if (existingItem) {
+      if (nuevaCantidad > 0) {
+        existingItem.cantidad = nuevaCantidad;
+      } else {
+        // Si la cantidad es 0 o menos, eliminar el artículo del carrito
+        cart = cart.filter(cartItem => cartItem.id !== itemId);
+      }
+      this.saveCart(cart);
+      this.updateCartItemCount();
     }
   }
 
-  getCart(): any[] {
-    return this.cart;
-  }
-
+  // Modificar la función de agregar al carrito para no incrementar la cantidad si ya existe
   addToCart(item: any): void {
-    //console.log("hola")
-    // Busca si el producto ya está en el carrito por su id
-    const existingItem = this.cart.find((cartItem) => cartItem.id === item.id);
+    let cart = this.loadCart();
   
+    const existingItem = cart.find((cartItem) => cartItem.id_producto === item.id_producto);
     if (existingItem) {
-      // Si el producto ya está en el carrito, aumenta su cantidad
       existingItem.cantidad = (existingItem.cantidad || 1) + 1;
     } else {
-      // Si el producto no está en el carrito, añádelo con una cantidad de 1
       const newItem = { ...item, cantidad: 1 };
-      this.cart.push(newItem);
+      cart.push(newItem);
     }
   
-    this.saveCart();
-    this.cartItemCountSubject.next(this.getTotalItemsCount());
+    this.saveCart(cart);
+    this.updateCartItemCount();
   }
   
 
-  removeFromCart(index: number): void {
-    this.cart.splice(index, 1);
-    this.saveCart();
-    this.cartItemCountSubject.next(this.getTotalItemsCount());
-  }
+  // Elimina un artículo del carrito
+  removeFromCart(itemId: number): void {
+    let cart = this.loadCart();
+    const index = cart.findIndex(cartItem => cartItem.id_producto === itemId);
+    if (index !== -1) {
+        cart.splice(index, 1);
+        this.saveCart(cart);
+        this.updateCartItemCount();
+    }
+}
 
+
+  // Obtiene el número total de artículos en el carrito
   getTotalItemsCount(): number {
-    return this.cart.reduce((total, item) => total + item.cantidad, 0);
+    let cart = this.loadCart();
+    return cart.reduce((total, item) => total + item.cantidad, 0);
   }
+
+  // Obtiene el precio total de los artículos en el carrito
   getPrecioTotal(): number {
-    return this.cart.reduce((total, item) => total + (item.cantidad * item.costo), 0);
+    let cart = this.loadCart();
+    return cart.reduce((total, item) => total + (item.cantidad * item.costo), 0);
+  }
+
+  // Limpia el carrito
+  clearCart(): void {
+    localStorage.removeItem(this.cartName);
+    this.updateCartItemCount();
+  }
+
+  // Actualiza el número de elementos en el carrito
+  private updateCartItemCount(): void {
+    const itemCount = this.getTotalItemsCount();
+    this.cartItemCountSubject.next(itemCount);
   }
   
-
-  clearCart(): void {
-    this.cart = [];
-    this.saveCart();
-  }
 }

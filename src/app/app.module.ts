@@ -10,7 +10,12 @@ import { ProductoCardComponent } from './producto-card/producto-card.component';
 import { QuienesSomosComponent } from './quienes-somos/quienes-somos.component';
 import { AdminComponent } from './admin/admin.component';
 import { CarritoComponent } from './carrito/carrito.component';
-import { FormsModule } from '@angular/forms'; // Importar FormsModule
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { ReportesVentasComponent } from './reportes-ventas/reportes-ventas.component'; // Importar FormsModule
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -22,12 +27,16 @@ import { FormsModule } from '@angular/forms'; // Importar FormsModule
     ProductoCardComponent,
     QuienesSomosComponent,
     AdminComponent,
-    CarritoComponent
+    CarritoComponent,
+    LoginComponent,
+    SignupComponent,
+    ReportesVentasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

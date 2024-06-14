@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../carrito.service';
-
+import { AutenticacionLogService } from '../autenticacion-log.service'; // Importa el servicio de autenticación
 
 @Component({
   selector: 'app-carrito',
@@ -9,38 +9,50 @@ import { CarritoService } from '../carrito.service';
 })
 export class CarritoComponent implements OnInit {
   carrito: any[] = [];
+  currentUser: string = ''; // Variable para almacenar el nombre de usuario actual
 
-  constructor(private carritoService: CarritoService) { 
-    this.obtenerCarrito()
-  }
+  constructor(
+    private carritoService: CarritoService,
+    private authService: AutenticacionLogService // Inyecta el servicio de autenticación
+  ) {}
 
   ngOnInit(): void {
-    this.obtenerCarrito();
+    // Obtén el nombre de usuario del usuario actual desde el servicio de autenticación
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.currentUser = user.username; // Guarda el nombre de usuario actual
+        this.obtenerCarrito(this.currentUser); // Llama a obtenerCarrito() cuando se obtenga el nombre de usuario
+      }
+    });
   }
 
-  obtenerCarrito(): void {
-    this.carrito=this.carritoService.getCart();
-   // this.carrito = this.carritoService.obtenerCarrito();
+  obtenerCarrito(username: string): void {
+    this.carrito = this.carritoService.getCart();
   }
 
   agregarProducto(item: any): void {
-    //this.carritoService.agregarProducto(item);
-    this.obtenerCarrito(); // Actualizar el carrito después de agregar un producto
+    this.carritoService.addToCart(item);
+    this.obtenerCarrito(this.currentUser);
   }
 
   eliminarProducto(item: any): void {
-    console.log("fe")
-    this.carritoService.removeFromCart(item.id)
-    this.obtenerCarrito(); // Actualizar el carrito después de eliminar un producto
+    this.carritoService.removeFromCart(item.id);
+    this.obtenerCarrito(this.currentUser);
+    this.obtenerCarrito(this.currentUser);
   }
+
   getPrecioTotal(): number {
     return this.carritoService.getPrecioTotal();
   }
-  
 
-  cantidadCambiada(item: any): void {
-    console.log('Cantidad actualizada:', item.cantidad,item);
-    item.cantidad--;// le removemos la cantidad agregada ya que el metodo de abajo se encarga de ello
-    this.carritoService.addToCart(item);
+  cantidadCambiada(item: any, nuevaCantidad: number): void {
+    if (nuevaCantidad < 0) {
+      nuevaCantidad = 0;
+    }
+    this.carritoService.updateCartItemQuantity(item.id, nuevaCantidad);
+    this.obtenerCarrito(this.currentUser);
   }
+  
+  
+  
 }

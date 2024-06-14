@@ -1,12 +1,14 @@
 <!-- app.component.html -->
-<div>
-    <app-menu (cambioCategoria)="onCategoriaSeleccionada($event)"></app-menu>
-  </div>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-lg-3 col-md-4 col-sm-6 sidebar">
+      <app-menu (cambioCategoria)="onCategoriaSeleccionada($event)"></app-menu>
+    </div>
   
-  <div>
-    <router-outlet></router-outlet>
+    <!-- Contenido principal -->
+    <div class="col-lg-9 col-md-8 col-sm-6 content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div>
-    <app-footer></app-footer>
-  </div>
-  
+</div>

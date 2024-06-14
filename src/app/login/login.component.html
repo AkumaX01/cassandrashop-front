@@ -1,0 +1,30 @@
+<div class="container" style="background-color: #f8f9fa;">
+    <div class="row">
+        <!-- Columna izquierda para la imagen -->
+        <div class="col-md-6">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Cassandra_logo.svg/1200px-Cassandra_logo.svg.png" alt="Imagen" class="img-fluid">
+        </div>
+        <!-- Columna derecha para el formulario de login -->
+        <div class="col-md-6">
+            <div class="login-form">
+                <h2>Login</h2>
+                <form (ngSubmit)="login()" #loginForm="ngForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required>
+                        <div *ngIf="loginForm.submitted && loginForm.controls['username'].invalid" class="text-danger">Se requiere el nombre de usuario</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+                        <div *ngIf="loginForm.submitted && loginForm.controls['password'].invalid" class="text-danger">Se requiere la Contraseña</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+                    <div *ngIf="loginForm.submitted && loginForm.invalid" class="text-danger">Campos vacios</div>
+                    <div *ngIf="loginError" class="alert alert-danger mt-3" role="alert">Contraseña o usuario incorrecto</div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  

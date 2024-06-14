@@ -14,4 +14,5 @@ export class AppComponent {
     this.categoriaSeleccionada = categoria;
   }
   
+  
 }

@@ -1,0 +1,75 @@
+<div class="container mt-4" style="background-color: #f8f9fa; padding: 20px;">
+  <div class="text-center mb-4">
+    <h2>{{ titulo }}</h2>
+    
+    <div class="mb-3">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="yearSelect">Año:</label>
+          <select id="yearSelect" class="form-control" [(ngModel)]="selectedYear">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="monthSelect">Mes:</label>
+          <select id="monthSelect" class="form-control" [(ngModel)]="selectedMonth">
+            <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-light mr-3 px-4 font-weight-bold text-uppercase" (click)="obtenerVentasGlobales()">Reporte de Ventas Globales</button>
+      <button class="btn btn-light px-4 font-weight-bold text-uppercase" (click)="obtenerVentasSucursal()">Reporte de Ventas de la sucursal</button>
+    </div>
+    <div *ngIf="mostrarOpcionGrafica" class="mb-3">
+      <button class="btn btn-light mr-3 px-4 font-weight-bold text-uppercase" (click)="generarGraficoVentas()">Generar Gráfica</button>
+    </div>
+  </div>
+  
+  <div *ngIf="!ocultarReportes">
+    <div *ngIf="noHayReportes" class="alert alert-info" role="alert">
+      No se encuentran reportes de ventas.
+    </div>
+    <div *ngFor="let venta of ventas" class="card my-3">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Sucursal: {{venta.nombreSucursal }}</h5>
+        <h5 class="card-title mb-0" >Estado: {{ estadoSucursal }}</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">Fecha: {{ venta.fecha | date: 'short' }}</p>
+        <p class="card-text">Mes: {{ venta.mes+1 }}</p>
+        <p class="card-text">Año: {{ venta.anio }}</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of venta.productos">
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.cantidad }}</td>
+              <td>{{ producto.precio | currency }}</td>
+              <td>{{ producto.total | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <div class="text-right">
+          <strong>Total Venta: {{ venta.totalVenta | currency }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loading-animation">
+    <div class="loading-spinner"></div>
+  </div>
+   <!-- Canvas de la gráfica -->
+   <div class="mt-4">
+    <canvas id="graficoVentas" width="800" height="400"></canvas>
+  </div>
+</div>
