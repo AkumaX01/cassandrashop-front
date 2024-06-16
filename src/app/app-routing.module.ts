@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
   { path: 'reportes', component: ReportesVentasComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent }, // No se aplica canActivate aquí
-  { path: '', redirectTo: '/login', pathMatch: 'full' } // Redirige al login por defecto
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige al login por defecto
+  { path: '**', redirectTo: '/login', pathMatch: 'full' } // Redirige al login por defecto
 ];
 
 
