@@ -1,18 +1,25 @@
 /* styles.css */
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300px; /* Ancho del menú */
-    height: 100%;
-    background-color: #f8f9fa; /* Color de fondo del menú */
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto; /* Agregar scroll si el contenido es demasiado largo */
+  height: 100%;
+  background-color: #f8f9fa; /* Color de fondo del menú */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Agregar scroll si el contenido es demasiado largo */
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.app-row {
+  height: 100%;
 }
 
 .content {
-    margin-left: 250px; /* Ancho del menú */
-    padding: 20px;
-    box-sizing: border-box;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
 }

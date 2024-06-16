@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AutenticacionLogService } from './autenticacion-log.service';
+import { getUrl } from './utils/api';
 
 // Definir el tipo Producto
 interface Producto {
@@ -67,7 +68,7 @@ export class RealizarVentaService {
         };
 
         // Realizar la solicitud POST
-        return this.http.post<any>('https://shop.ernestorb.com/sales', datosVenta, httpOptions).pipe(
+        return this.http.post<any>(getUrl('/sales'), datosVenta, httpOptions).pipe(
           catchError(error => {
             return throwError('Error al realizar la venta');
           })

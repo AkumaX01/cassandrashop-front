@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AutenticacionLogService } from './autenticacion-log.service';
+import { getUrl } from './utils/api';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class DataService {
             return of([]);
           }
           
-          const url = 'https://shop.ernestorb.com/products';
+          const url = getUrl('products');
           const headers = new HttpHeaders({
             'Authorization': `Bearer ${token}`
           });

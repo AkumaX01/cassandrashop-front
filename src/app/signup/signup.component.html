@@ -1,25 +1,100 @@
 <!-- signup.component.html -->
-<div class="container" style="background-color: #f8f9fa;">
-    <h2>Agregar nuevo Usuario</h2>
-    <form  #signupForm="ngForm">
-      <div class="mb-3">
-        <label for="username" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required>
-        <div *ngIf="signupForm.submitted && signupForm.controls['username'].invalid" class="text-danger">Username is required</div>
+<div class="container" style="background-color: #f8f9fa">
+  <h2>Agregar nuevo Usuario</h2>
+  <form (ngSubmit)="signup()" #signupForm="ngForm">
+    <div class="mb-3">
+      <label for="username" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+        minlength="10"
+        maxlength="255"
+      />
+      <div
+        *ngIf="signupForm.touched && signupForm.controls['nombre'].invalid"
+        class="text-danger"
+      >
+        Nombre is required and must be between 10 and 255 chars
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
-        <div *ngIf="signupForm.submitted && signupForm.controls['password'].invalid" class="text-danger">Password is required</div>
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        [(ngModel)]="username"
+        name="username"
+        required
+        minlength="5"
+        maxlength="10"
+      />
+      <div
+        *ngIf="signupForm.touched && signupForm.controls['username'].invalid"
+        class="text-danger"
+      >
+        Username is required and must be between 5 and 10 chars
       </div>
-      <div class="mb-3">
-        <label for="role" class="form-label">Role</label>
-        <select class="form-control" id="role" [(ngModel)]="role" name="role" required>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        minlength="8"
+        required
+      />
+      <div
+        *ngIf="signupForm.touched && signupForm.controls['password'].invalid"
+        class="text-danger"
+      >
+        Password is required and must be at least 8
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Signup</button>
-      <div *ngIf="signupForm.submitted && signupForm.invalid" class="text-danger">Campos vacios</div>
-    </form>
+    </div>
+    <div class="mb-3">
+      <label for="role" class="form-label">Role</label>
+      <select
+        class="form-control"
+        id="role"
+        [(ngModel)]="role"
+        name="role"
+        required
+      >
+        <option value="Empleado">Empleado</option>
+        <option value="Gerente">Gerente</option>
+        <option value="Director">Director</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="role" class="form-label">Sucursal</label>
+      <select
+        class="form-control"
+        id="sucursal"
+        [(ngModel)]="sucursal"
+        name="sucursal"
+        required
+      >
+        <option [value]="suc.id" *ngFor="let suc of sucursales">
+          {{ suc.nombre }} ({{ suc.municipio }}, {{ suc.estado }})
+        </option>
+      </select>
+    </div>
+    <div *ngIf="signupForm.touched && signupForm.invalid" class="text-danger">
+      Campos vacios
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!signupForm.valid"
+    >
+      Signup
+    </button>
+  </form>
 </div>
