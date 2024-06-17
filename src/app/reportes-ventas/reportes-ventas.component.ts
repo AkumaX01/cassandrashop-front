@@ -35,8 +35,9 @@ export class ReportesVentasComponent implements OnInit {
   ocultarReportes: boolean = false;
   graficoVentas: Chart | null = null;
   noHayReportes: boolean = false;
-  
 
+  user: any = null;
+  
   constructor(private ventasService: VentasService, private autenticacionLogService: AutenticacionLogService) {
     const currentYear = new Date().getFullYear();
     for (let year = currentYear; year >= currentYear - 10; year--) {
@@ -44,7 +45,9 @@ export class ReportesVentasComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.autenticacionLogService.user$.subscribe(u => this.user = u)
+  }
 
   obtenerVentasGlobales() {
     this.limpiarGrafica();

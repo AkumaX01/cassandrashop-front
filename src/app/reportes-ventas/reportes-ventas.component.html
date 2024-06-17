@@ -19,8 +19,8 @@
       </div>
     </div>
     <div class="mb-3">
-      <button class="btn btn-light mr-3 px-4 font-weight-bold text-uppercase" (click)="obtenerVentasGlobales()">Reporte de Ventas Globales</button>
-      <button class="btn btn-light px-4 font-weight-bold text-uppercase" (click)="obtenerVentasSucursal()">Reporte de Ventas de la sucursal</button>
+      <button class="btn btn-light mr-3 px-4 font-weight-bold text-uppercase" *ngIf="user?.rol === 'Director'" (click)="obtenerVentasGlobales()">Reporte de Ventas Globales</button>
+      <button class="btn btn-light px-4 font-weight-bold text-uppercase" *ngIf="user?.rol === 'Director' || user?.rol === 'Gerente'" (click)="obtenerVentasSucursal()">Reporte de Ventas de la sucursal</button>
     </div>
     <div *ngIf="mostrarOpcionGrafica" class="mb-3">
       <button class="btn btn-light mr-3 px-4 font-weight-bold text-uppercase" (click)="generarGraficoVentas()">Generar Gráfica</button>
