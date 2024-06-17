@@ -8,6 +8,8 @@ import { CarritoComponent } from './carrito/carrito.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ReportesVentasComponent } from './reportes-ventas/reportes-ventas.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 import { AuthGuard } from './AuthGuard';
 
 const routes: Routes = [
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: 'carrito', component: CarritoComponent , canActivate: [AuthGuard]},
   { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
   { path: 'reportes', component: ReportesVentasComponent , canActivate: [AuthGuard]},
+  { path: 'lista-usuarios', component: ListaUsuariosComponent , canActivate: [AuthGuard]},
+  { path: 'agregar-producto', component: AgregarProductoComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent }, // No se aplica canActivate aquí
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige al login por defecto
   { path: '**', redirectTo: '/login', pathMatch: 'full' } // Redirige al login por defecto

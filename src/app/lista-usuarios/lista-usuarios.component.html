@@ -1,0 +1,56 @@
+<div class="container mt-4" style="background-color: #f8f9fa; padding: 20px;">
+    <div class="text-center mb-4">
+      <h2>Lista de Usuarios</h2>
+      
+      <div class="mb-3">
+        <button 
+          class="btn btn-light mr-3 px-4 font-weight-bold text-uppercase" 
+          *ngIf="userRole === 'Director'" 
+          (click)="showGlobalUsers()"
+        >
+          Usuarios Globales
+        </button>
+        <button 
+          class="btn btn-light px-4 font-weight-bold text-uppercase" 
+          *ngIf="userRole === 'Director' || userRole === 'Gerente'" 
+          (click)="showSucursalUsers()"
+        >
+          Usuarios por Sucursal
+        </button>
+      </div>
+    </div>
+    
+    <div *ngIf="isLoading" class="loading-animation">
+      <div class="loading-spinner"></div>
+    </div>
+  
+    <div *ngIf="!isLoading && hasClicked">
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      <div *ngIf="users.length === 0 && !error" class="alert alert-info" role="alert">
+        No se encontraron usuarios.
+      </div>
+      <div *ngIf="users.length > 0 && !error">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>ID Sucursal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.nombre }}</td>
+              <td>{{ user.usuario }}</td>
+              <td>{{ user.rol }}</td>
+              <td>{{ user.id_sucursal }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

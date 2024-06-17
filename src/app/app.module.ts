@@ -15,6 +15,10 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ReportesVentasComponent } from './reportes-ventas/reportes-ventas.component'; // Importar FormsModule
 import { HttpClientModule } from '@angular/common/http';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
+import { ReactiveFormsModule } from '@angular/forms';  // Asegúrate de importar ReactiveFormsModule
+
 
 
 
@@ -30,13 +34,16 @@ import { HttpClientModule } from '@angular/common/http';
     CarritoComponent,
     LoginComponent,
     SignupComponent,
-    ReportesVentasComponent
+    ReportesVentasComponent,
+    ListaUsuariosComponent,
+    AgregarProductoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

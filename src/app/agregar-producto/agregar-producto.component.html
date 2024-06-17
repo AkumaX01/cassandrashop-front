@@ -1,0 +1,90 @@
+<div class="container" style="background-color: #f8f9fa; padding: 20px;">
+    <h2>Agregar nuevo Producto</h2>
+    <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="categoria" class="form-label">Categoría</label>
+        <input
+          type="text"
+          class="form-control"
+          id="categoria"
+          formControlName="categoria"
+          required
+        />
+        <div
+          *ngIf="productoForm.controls['categoria'].touched && productoForm.controls['categoria'].invalid"
+          class="text-danger"
+        >
+          Categoría es requerida.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          formControlName="nombre"
+          required
+        />
+        <div
+          *ngIf="productoForm.controls['nombre'].touched && productoForm.controls['nombre'].invalid"
+          class="text-danger"
+        >
+          Nombre es requerido.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="costo" class="form-label">Costo</label>
+        <input
+          type="number"
+          class="form-control"
+          id="costo"
+          formControlName="costo"
+          required
+          min="0"
+        />
+        <div
+          *ngIf="productoForm.controls['costo'].touched && productoForm.controls['costo'].invalid"
+          class="text-danger"
+        >
+          Costo es requerido y debe ser un número mayor o igual a 0.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="cantidad" class="form-label">Cantidad</label>
+        <input
+          type="number"
+          class="form-control"
+          id="cantidad"
+          formControlName="cantidad"
+          required
+          min="0"
+        />
+        <div
+          *ngIf="productoForm.controls['cantidad'].touched && productoForm.controls['cantidad'].invalid"
+          class="text-danger"
+        >
+          Cantidad es requerida y debe ser un número mayor o igual a 0.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="imagen" class="form-label">URL de la Imagen</label>
+        <input
+          type="text"
+          class="form-control"
+          id="imagen"
+          formControlName="imagen"
+        />
+      </div>
+      <div *ngIf="productoForm.touched && productoForm.invalid" class="text-danger">
+        Por favor complete todos los campos requeridos.
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!productoForm.valid || isLoading">
+        Agregar Producto
+      </button>
+      <div *ngIf="error" class="text-danger mt-3">
+        {{ error }}
+      </div>
+    </form>
+  </div>
+  

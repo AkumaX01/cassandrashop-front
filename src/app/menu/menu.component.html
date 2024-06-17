@@ -60,6 +60,16 @@
                 >Nuevo-usuario</a
               >
             </li>
+            <li class="nav-item" *ngIf="user?.rol === 'Director' || user?.rol === 'Gerente'">
+              <a class="nav-link" routerLink="/lista-usuarios" routerLinkActive="active"
+                >lista-usuarios</a
+              >
+            </li>
+            <li class="nav-item" *ngIf="user?.rol === 'Director'">
+              <a class="nav-link" routerLink="/agregar-producto" routerLinkActive="active"
+                >Agregar-Producto</a
+              >
+            </li>
             <li class="nav-item">
               <a
                 class="nav-link"
