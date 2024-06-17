@@ -12,6 +12,7 @@ import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.componen
 import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 import { AuthGuard } from './AuthGuard';
 import { MisVentasComponent } from './mis-ventas/mis-ventas.component';
+import { LoginGuard } from './LoginGuard';
 
 const routes: Routes = [
   { path: 'productos', component: ProductosComponent, canActivate: [AuthGuard] },
@@ -23,7 +24,7 @@ const routes: Routes = [
   { path: 'lista-usuarios', component: ListaUsuariosComponent , canActivate: [AuthGuard]},
   { path: 'agregar-producto', component: AgregarProductoComponent , canActivate: [AuthGuard]},
   { path: 'mis-ventas', component: MisVentasComponent , canActivate: [AuthGuard]},
-  { path: 'login', component: LoginComponent }, // No se aplica canActivate aquí
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] }, // No se aplica canActivate aquí
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige al login por defecto
   { path: '**', redirectTo: '/login', pathMatch: 'full' } // Redirige al login por defecto
 ];

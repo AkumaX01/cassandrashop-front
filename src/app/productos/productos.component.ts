@@ -4,6 +4,7 @@ import { CarritoService } from '../carrito.service';
 import { DataService } from '../data.service';
 import { AutenticacionLogService } from '../autenticacion-log.service';
 import { RealizarVentaService } from '../realizar-venta.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-productos',
@@ -88,7 +89,7 @@ export class ProductosComponent implements OnInit, OnChanges {
     this.total= this.carritoService.getPrecioTotal();
   }
   finalizarCompra(): void {
-    this.realizarVentaService.realizarVenta().subscribe(
+    this.realizarVentaService.realizarVenta().pipe(first()).subscribe(
       () => {
         // Si la venta se realizó con éxito, borrar el carrito del localStorage
         this.carritoService.clearCart();

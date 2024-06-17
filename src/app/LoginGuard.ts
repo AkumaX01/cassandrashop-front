@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
   constructor(
     private authService: AutenticacionLogService,
     private router: Router
@@ -16,8 +16,8 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.authService.isLoggedIn$.pipe(
       tap((loggedIn) => {
-        if (!loggedIn) {
-          this.router.navigate(['/login']); // Si no está logeado, redirige al componente de inicio de sesión
+        if (loggedIn) {
+          this.router.navigate(['/productos']); // Si está logeado, redirige al componente de productos
         }
       })
     );

@@ -43,8 +43,6 @@ export class MenuComponent implements OnInit {
     this.autenticacionLogService.user$.subscribe((user) => {
       this.user = user;
     });
-    console.log(this.user.rol);
-    console.log(this.user.rol);
   }
 
   // Método para actualizar el contador del carrito
