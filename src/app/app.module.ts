@@ -17,7 +17,8 @@ import { ReportesVentasComponent } from './reportes-ventas/reportes-ventas.compo
 import { HttpClientModule } from '@angular/common/http';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
-import { ReactiveFormsModule } from '@angular/forms';  // Asegúrate de importar ReactiveFormsModule
+import { ReactiveFormsModule } from '@angular/forms';
+import { MisVentasComponent } from './mis-ventas/mis-ventas.component';  // Asegúrate de importar ReactiveFormsModule
 
 
 
@@ -36,7 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';  // Asegúrate de importar
     SignupComponent,
     ReportesVentasComponent,
     ListaUsuariosComponent,
-    AgregarProductoComponent
+    AgregarProductoComponent,
+    MisVentasComponent
   ],
   imports: [
     BrowserModule,

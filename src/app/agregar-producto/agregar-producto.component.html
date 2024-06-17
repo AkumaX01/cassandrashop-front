@@ -3,13 +3,15 @@
     <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label for="categoria" class="form-label">Categoría</label>
-        <input
+        <select
           type="text"
           class="form-control"
           id="categoria"
           formControlName="categoria"
           required
-        />
+        > 
+        <option [value]="cat" *ngFor="let cat of categorias">{{cat}}</option>
+      </select>
         <div
           *ngIf="productoForm.controls['categoria'].touched && productoForm.controls['categoria'].invalid"
           class="text-danger"

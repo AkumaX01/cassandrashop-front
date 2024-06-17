@@ -37,6 +37,9 @@
                 >Productos</a
               >
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" routerLink="/productos">Todos</a>
+                </li>
                 <li *ngFor="let categoria of categorias">
                   <a
                     class="dropdown-item"
@@ -60,14 +63,31 @@
                 >Nuevo-usuario</a
               >
             </li>
-            <li class="nav-item" *ngIf="user?.rol === 'Director' || user?.rol === 'Gerente'">
-              <a class="nav-link" routerLink="/lista-usuarios" routerLinkActive="active"
-                >lista-usuarios</a
+            <li
+              class="nav-item"
+              *ngIf="user?.rol === 'Director' || user?.rol === 'Gerente'"
+            >
+              <a
+                class="nav-link"
+                routerLink="/lista-usuarios"
+                routerLinkActive="active"
+                >Usuarios</a
               >
             </li>
             <li class="nav-item" *ngIf="user?.rol === 'Director'">
-              <a class="nav-link" routerLink="/agregar-producto" routerLinkActive="active"
+              <a
+                class="nav-link"
+                routerLink="/agregar-producto"
+                routerLinkActive="active"
                 >Agregar-Producto</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/mis-ventas"
+                routerLinkActive="active"
+                >Mis ventas</a
               >
             </li>
             <li class="nav-item">

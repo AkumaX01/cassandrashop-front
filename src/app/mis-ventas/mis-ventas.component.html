@@ -1,0 +1,46 @@
+<div class="container mt-4" style="background-color: #f8f9fa; padding: 20px">
+  <div class="text-center mb-4">
+    <h2>{{ titulo }}</h2>
+
+    <div *ngIf="noHayReportes" class="alert alert-info" role="alert">
+      No se encuentran reportes de ventas.
+    </div>
+    <div *ngFor="let venta of ventas" class="card my-3">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Sucursal: {{ venta.nombre_sucursal }}</h5>
+
+        <!-- Hector aqui falta la logica para los estados globales, ya hazlo con ngifo decirl a ernest de la api -->
+      </div>
+      <div class="card-body">
+        <p class="card-text">Fecha: {{ venta.fecha | date : "short" }}</p>
+        <p class="card-text">Mes: {{ venta.mes + 1 }}</p>
+        <p class="card-text">Año: {{ venta.anio }}</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of venta.productos">
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.cantidad }}</td>
+              <td>{{ producto.precio | currency }}</td>
+              <td>{{ producto.total | currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+        <div class="text-right">
+          <strong>Total Venta: {{ venta.totalVenta | currency }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="loading-animation">
+    <div class="loading-spinner"></div>
+  </div>
+</div>

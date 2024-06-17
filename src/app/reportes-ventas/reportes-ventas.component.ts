@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { VentasService } from '../ventas.service';
-import { finalize } from 'rxjs/operators';
 import Chart from 'chart.js/auto';
 import { AutenticacionLogService } from '../autenticacion-log.service';
 
@@ -13,8 +12,6 @@ export class ReportesVentasComponent implements OnInit {
   
   ventas: any[] = [];
   titulo: string = "Reporte de Ventas";
-  nombreSucursal: string = "";
-  estadoSucursal: string = "";
   selectedYear: number = new Date().getFullYear(); // Año actual
   selectedMonth: number = new Date().getMonth(); // Mes actual (0-indexado)
   years: number[] = [];
@@ -38,6 +35,7 @@ export class ReportesVentasComponent implements OnInit {
   ocultarReportes: boolean = false;
   graficoVentas: Chart | null = null;
   noHayReportes: boolean = false;
+  
 
   constructor(private ventasService: VentasService, private autenticacionLogService: AutenticacionLogService) {
     const currentYear = new Date().getFullYear();
@@ -55,16 +53,13 @@ export class ReportesVentasComponent implements OnInit {
     this.ventas = [];
     this.mostrarOpcionGrafica = false;
     this.noHayReportes = false;
-
+    this.titulo = "Reporte de Ventas Globales";
     this.ventasService.getVentasGlobales(this.selectedMonth, this.selectedYear).subscribe(data => {
       if (data) {
         this.ventas = data;
-        this.actualizarVentasConSucursalInfo().then(() => {
-          this.calcularTotales();
-          this.titulo = "Reporte de Ventas Globales";
-          this.noHayReportes = this.ventas.length === 0;
-           this.mostrarOpcionGrafica = this.ventas.length!=0;
-        });
+        this.calcularTotales();
+        this.noHayReportes = this.ventas.length === 0;
+        this.mostrarOpcionGrafica = this.ventas.length!=0;
       } else {
         this.noHayReportes = true;
       }
@@ -77,24 +72,6 @@ export class ReportesVentasComponent implements OnInit {
     });
   }
 
-  async actualizarVentasConSucursalInfo() {
-    const ventasActualizadas: any[] = [];
-  
-    for (const venta of this.ventas) {
-      await this.autenticacionLogService.obtenerSucursal(venta.id_sucursal).toPromise().then(sucursal => {
-        if (sucursal) {
-          const ventaActualizada = {
-            ...venta,
-            nombreSucursal: sucursal.nombre,
-            estado: sucursal.estado
-          };
-          ventasActualizadas.push(ventaActualizada);
-        }
-      });
-    }
-  
-    this.ventas = ventasActualizadas;
-  }
 
   obtenerVentasSucursal() {
     this.limpiarGrafica();
@@ -110,14 +87,12 @@ export class ReportesVentasComponent implements OnInit {
 
         this.autenticacionLogService.obtenerSucursal(idSucursal).subscribe(sucursal => {
           if (sucursal) {
-            this.nombreSucursal = sucursal.nombre;
-            this.estadoSucursal = sucursal.estado;
+            this.titulo = `Reporte de Ventas, ${sucursal.nombre}`;
 
             this.ventasService.getVentasSucursal(this.selectedMonth, this.selectedYear).subscribe(data => {
               if (data) {
                 this.ventas = data;
                 this.calcularTotales();
-                this.titulo = `Reporte de Ventas, ${this.nombreSucursal}`;
                 this.noHayReportes = this.ventas.length === 0;
                 this.mostrarOpcionGrafica = this.ventas.length!=0;
               } else {

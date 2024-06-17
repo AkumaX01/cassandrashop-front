@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AutenticacionLogService } from './autenticacion-log.service';
+import { getUrl } from './utils/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgregarProductoService {
-  private apiUrl = 'https://shop.ernestorb.com/product';
+  private apiUrl = getUrl('products');
 
   constructor(private http: HttpClient, private authService: AutenticacionLogService) {}
 

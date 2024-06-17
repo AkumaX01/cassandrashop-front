@@ -40,7 +40,7 @@ export class VentasService {
     );
   }
 
-  // Función para obtener las ventas de una sucursal específica
+  // Función para obtener las ventas de del usuario con sesion iniciada
   getVentasSucursal(mes: number, anio: number): Observable<any> {
     // Obtener el ID de la sucursal del Observable user$
     return this.authService.user$.pipe(
@@ -71,6 +71,26 @@ export class VentasService {
         } else {
           // Si no se obtuvo un usuario o no tiene la propiedad id_sucursal, devolver un observable vacío
           return of(null);
+        }
+      })
+    );
+  }
+
+  getMisVentas(): Observable<any[]> {
+    // Obtener el ID de la sucursal del Observable user$
+    return this.authService.token$.pipe(
+      switchMap((token) => {
+        // Verificar si se obtuvo un token
+        if (token) {
+          // Configurar los encabezados con el token de autorización
+          const headers = new HttpHeaders({
+            Authorization: `Bearer ${token}`,
+          });
+          // Realizar la solicitud HTTP con los encabezados configurados
+          return this.http.get<any[]>(getUrl('sales/mine'), { headers });
+        } else {
+          // Si no se obtuvo un token, devolver un observable vacío
+          return of([]);
         }
       })
     );

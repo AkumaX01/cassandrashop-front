@@ -11,6 +11,7 @@ import { ReportesVentasComponent } from './reportes-ventas/reportes-ventas.compo
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 import { AuthGuard } from './AuthGuard';
+import { MisVentasComponent } from './mis-ventas/mis-ventas.component';
 
 const routes: Routes = [
   { path: 'productos', component: ProductosComponent, canActivate: [AuthGuard] },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'reportes', component: ReportesVentasComponent , canActivate: [AuthGuard]},
   { path: 'lista-usuarios', component: ListaUsuariosComponent , canActivate: [AuthGuard]},
   { path: 'agregar-producto', component: AgregarProductoComponent , canActivate: [AuthGuard]},
+  { path: 'mis-ventas', component: MisVentasComponent , canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent }, // No se aplica canActivate aquí
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirige al login por defecto
   { path: '**', redirectTo: '/login', pathMatch: 'full' } // Redirige al login por defecto

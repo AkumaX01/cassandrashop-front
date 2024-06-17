@@ -3,14 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { AutenticacionLogService } from './autenticacion-log.service';
+import { getUrl } from './utils/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObtenerListaUsuariosService {
 
-  private apiUrlGlobal = 'https://shop.ernestorb.com/user/all';
-  private apiUrlSucursal = 'https://shop.ernestorb.com/user';  // Asumiendo que hay una URL para usuarios por sucursal
+  private apiUrlGlobal = getUrl('user/all');
+  private apiUrlSucursal = getUrl('user');  // Asumiendo que hay una URL para usuarios por sucursal
 
   constructor(private http: HttpClient, private authService: AutenticacionLogService) { }
 
