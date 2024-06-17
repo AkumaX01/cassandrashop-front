@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AgregarProductoService } from '../agregar-producto.service';
 import { AutenticacionLogService } from '../autenticacion-log.service';
 import { DataService } from '../data.service';
+import { SucursalService } from '../sucursal.service';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -13,18 +14,21 @@ export class AgregarProductoComponent implements OnInit {
   productoForm: FormGroup;
   isLoading = false;
   error = '';
-  idSucursal: string | null = null;
   categorias: string[] = [];
+  sucursales: any[] = [];
+  user: any = null;
 
   constructor(
     private fb: FormBuilder,
     private productoService: AgregarProductoService,
     private authService: AutenticacionLogService,
-    private dataService: DataService
+    private dataService: DataService,
+    private sucursalesService: SucursalService
   ) {
     this.productoForm = this.fb.group({
       categoria: ['', Validators.required],
       nombre: ['', Validators.required],
+      id_sucursal: ['', Validators.required],
       costo: [0, [Validators.required, Validators.min(0)]],
       cantidad: [0, [Validators.required, Validators.min(0)]],
       imagen: [''],
@@ -35,26 +39,37 @@ export class AgregarProductoComponent implements OnInit {
     // Subscribirse al observable de usuario para obtener el id_sucursal
     this.authService.user$.subscribe((user) => {
       if (user && user.id_sucursal) {
-        this.idSucursal = user.id_sucursal;
+        this.user = user;
+        if (user.rol == 'Director') {
+          this.productoForm.get('id_sucursal')?.enable({ emitEvent: true });
+        } else {
+          this.productoForm.get('id_sucursal')?.disable({ emitEvent: true });
+        }
+        this.productoForm.setValue({
+          ...this.productoForm.value,
+          id_sucursal: user.id_sucursal,
+        });
       }
     });
     this.dataService
       .obtenerCategorias()
       .subscribe((cat) => (this.categorias = cat));
+    this.sucursalesService.obtenerSucursales().subscribe((sucursales) => {
+      console.log({ sucursales });
+      this.sucursales = sucursales;
+    });
   }
 
   onSubmit(): void {
-    if (this.productoForm.invalid || !this.idSucursal) {
+    if (this.productoForm.invalid) {
       return;
     }
 
     this.isLoading = true;
     this.error = '';
 
-    // Incluir id_sucursal en el objeto del producto
     const producto = {
-      ...this.productoForm.value,
-      id_sucursal: this.idSucursal,
+      ...this.productoForm.getRawValue(),
     };
 
     this.productoService.addProduct(producto).subscribe(

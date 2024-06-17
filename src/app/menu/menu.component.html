@@ -77,7 +77,10 @@
                 >Usuarios</a
               >
             </li>
-            <li class="nav-item" *ngIf="user?.rol === 'Director'">
+            <li
+              class="nav-item"
+              *ngIf="user?.rol === 'Director' || user?.rol === 'Gerente'"
+            >
               <a
                 class="nav-link"
                 routerLink="/agregar-producto"

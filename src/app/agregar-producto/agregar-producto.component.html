@@ -70,6 +70,24 @@
         </div>
       </div>
       <div class="mb-3">
+        <label for="id_sucursal" class="form-label">Sucursal</label>
+        <select
+          type="text"
+          class="form-control"
+          id="id_sucursal"
+          formControlName="id_sucursal"
+          required
+        >
+        <option [value]="suc.id" *ngFor="let suc of sucursales">{{ suc.nombre}} ({{suc.municipio}}, {{ suc.estado}})</option>
+      </select>
+        <div
+          *ngIf="productoForm.controls['id_sucursal'].touched && productoForm.controls['id_sucursal'].invalid"
+          class="text-danger"
+        >
+          Sucursal es obligatorio
+        </div>
+      </div>
+      <div class="mb-3">
         <label for="imagen" class="form-label">URL de la Imagen</label>
         <input
           type="text"
