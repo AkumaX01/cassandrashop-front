@@ -24,9 +24,9 @@
               <h4>{{ this.user?.usuario }}</h4>
               <span *ngIf="this.user?.sucursal"
                 >Sucursal: {{ this.user.sucursal.nombre }}</span
-              ><br><span *ngIf="this.user.rol"
-              >Rol: {{ this.user?.rol }}</span
-            >
+              ><br /><span *ngIf="this.user.rol"
+                >Rol: {{ this.user?.rol }}</span
+              >
             </li>
             <li class="nav-item dropdown">
               <a
@@ -65,7 +65,7 @@
             </li>
             <li class="nav-item" *ngIf="user?.rol === 'Director'">
               <a class="nav-link" routerLink="/signup" routerLinkActive="active"
-                >Nuevo-usuario</a
+                >Nuevo usuario</a
               >
             </li>
             <li
@@ -87,7 +87,7 @@
                 class="nav-link"
                 routerLink="/agregar-producto"
                 routerLinkActive="active"
-                >Agregar-Producto</a
+                >Agregar Producto</a
               >
             </li>
             <li class="nav-item">
