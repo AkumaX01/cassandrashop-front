@@ -19,7 +19,8 @@ export class ProductosComponent implements OnInit, OnChanges {
   busqueda: string = '';
   carrito: any[] = [];
   currentUser: string = ''; // Variable para almacenar el nombre de usuario actual
-  total=0;;
+  total=0;
+  loadingProducts = false;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private carritoService: CarritoService,private authService: AutenticacionLogService, private realizarVentaService: RealizarVentaService) { }
 
@@ -33,10 +34,10 @@ export class ProductosComponent implements OnInit, OnChanges {
      this.authService.user$.subscribe(user => {
       if (user) {
         this.currentUser = user.usuario; // Guarda el nombre de usuario actual
-        this.obtenerCarrito(this.currentUser); // Llama a obtenerCarrito() cuando se obtenga el nombre de usuario
       }
     });
-    this.getPrecioTotal();
+    this.carritoService.cart$.subscribe(c => this.carrito = c)
+    this.carritoService.cartTotal$.subscribe(total => this.total = total)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,25 +48,31 @@ export class ProductosComponent implements OnInit, OnChanges {
   }
 
   actualizarProductos(): void {
+    this.loadingProducts = true;
     if (this.categoriaSeleccionada) {
       this.dataService.obtenerProductosPorCategoria(this.categoriaSeleccionada).subscribe(
         productos => {
           this.productos = productos;
           this.filtrarProductos();
+          this.loadingProducts = false;
+
         },
         error => {
           console.error('Error al obtener productos por categoría:', error);
-        }
+          this.loadingProducts = false;
+  }
       );
     } else {
       this.dataService.obtenerProductos().subscribe(
         productos => {
           this.productos = productos;
           this.filtrarProductos();
-        },
+          this.loadingProducts = false;
+  },
         error => {
           console.error('Error al obtener todos los productos:', error);
-        }
+          this.loadingProducts = false;
+  }
       );
     }
   }
@@ -79,22 +86,15 @@ export class ProductosComponent implements OnInit, OnChanges {
       );
     }
   }
-  getPrecioTotal() {
-    this.total= this.carritoService.getPrecioTotal();
-  }
 
   eliminarDelCarrito(item: any){
-    this.carritoService.removeFromCart( item.id_producto);
-    this.obtenerCarrito(this.currentUser);
-    this.total= this.carritoService.getPrecioTotal();
+    this.carritoService.removeFromCart(item.id_producto);
   }
   finalizarCompra(): void {
     this.realizarVentaService.realizarVenta().pipe(first()).subscribe(
       () => {
         // Si la venta se realizó con éxito, borrar el carrito del localStorage
         this.carritoService.clearCart();
-        // Actualizar el carrito en el componente para que desaparezcan los elementos del carrito en el HTML
-        this.actualizarCarrito();
         // Mostrar mensaje de éxito
         this.mostrarMensaje('Compra realizada con éxito');
       },
@@ -111,13 +111,5 @@ export class ProductosComponent implements OnInit, OnChanges {
     alert(mensaje); // Mostrar mensaje en una ventana emergente
   }
   
-  
-  obtenerCarrito(username: string): void {
-    this.carrito = this.carritoService.getCart();
-  }
-  actualizarCarrito(): void {
-    this.obtenerCarrito(this.currentUser);
-    this.total = this.carritoService.getPrecioTotal();
-  }
-  
+
 }

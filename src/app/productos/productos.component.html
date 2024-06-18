@@ -9,9 +9,15 @@
 
       <!-- Contenedor de productos -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <div *ngIf="loadingProducts" class="loading-animation">
+          <div class="loading-spinner"></div>
+        </div>
+        <div *ngIf="!loadingProducts && productos.length == 0" class="alert alert-warning" role="alert">
+          No hay productos
+        </div>
         <ng-container *ngFor="let producto of productosFiltrados">
           <div class="col">
-            <app-producto-card [producto]="producto" (productoAgregadoAlCarrito)="actualizarCarrito()"></app-producto-card>
+            <app-producto-card [producto]="producto" ></app-producto-card>
           </div>
         </ng-container>
         

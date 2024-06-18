@@ -2,7 +2,7 @@
   /* styles.css */
 
   .navbar-nav .nav-link {
-    font-size: 1.75rem; /* Aumenta el tamaño de la fuente */
+    font-size: 1.25rem; /* Aumenta el tamaño de la fuente */
     transition: color 0.3s ease;
   }
   .navbar-nav .nav-link:hover {

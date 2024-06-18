@@ -63,15 +63,15 @@
               <ul class="list-unstyled mb-4">
                   <li class="d-flex justify-content-between py-3 border-bottom">
                       <strong class="text-muted">Subtotal</strong>
-                      <strong>{{ getPrecioTotal() | currency }}</strong>
+                      <strong>{{ precioTotal | currency }}</strong>
                   </li>
                   
                   <li class="d-flex justify-content-between py-3 border-bottom">
                       <strong class="text-muted">Total</strong>
-                      <strong>{{ getPrecioTotal() | currency }}</strong>
+                      <strong>{{ precioTotal | currency }}</strong>
                   </li>
               </ul>
-              <a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Proceder a pagar</a>
+              <button (click)="finalizarCompra()" class="btn btn-dark rounded-pill py-2 btn-block">Proceder a pagar</button>
           </div>
       </div>
 

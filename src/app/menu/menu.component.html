@@ -21,10 +21,12 @@
 
           <ng-container *ngIf="isLoggedIn && user">
             <li class="nav-item">
-              <h3>{{ this.user?.usuario }} - {{ this.user?.rol }}</h3>
-              <span *ngIf="this.user.sucursal"
+              <h4>{{ this.user?.usuario }}</h4>
+              <span *ngIf="this.user?.sucursal"
                 >Sucursal: {{ this.user.sucursal.nombre }}</span
-              >
+              ><br><span *ngIf="this.user.rol"
+              >Rol: {{ this.user?.rol }}</span
+            >
             </li>
             <li class="nav-item dropdown">
               <a

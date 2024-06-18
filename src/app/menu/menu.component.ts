@@ -27,7 +27,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     // Suscribirse a los cambios en el contador del carrito
-    this.carritoService.cartItemCount$.subscribe((count) => {
+    this.carritoService.cartQty$.subscribe((count) => {
       this.cartItemCount = count;
     });
     this.getCategorias();
@@ -36,23 +36,9 @@ export class MenuComponent implements OnInit {
     this.autenticacionLogService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
       // Actualizar el contador del carrito cuando cambia el estado de autenticación
-      if (status) {
-        this.actualizarContadorCarrito();
-      }
     });
     this.autenticacionLogService.user$.subscribe((user) => {
       this.user = user;
-    });
-  }
-
-  // Método para actualizar el contador del carrito
-  actualizarContadorCarrito(): void {
-    this.autenticacionLogService.user$.subscribe((user) => {
-      const username = user?.username;
-      if (username) {
-        const itemCount = this.carritoService.getTotalItemsCount();
-        this.cartItemCount = itemCount;
-      }
     });
   }
 

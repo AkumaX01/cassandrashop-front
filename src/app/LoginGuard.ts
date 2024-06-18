@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AutenticacionLogService } from './autenticacion-log.service';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,10 +15,12 @@ export class LoginGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.authService.isLoggedIn$.pipe(
-      tap((loggedIn) => {
+      map((loggedIn) => {
         if (loggedIn) {
           this.router.navigate(['/productos']); // Si está logeado, redirige al componente de productos
+          return false;
         }
+        return true;
       })
     );
   }

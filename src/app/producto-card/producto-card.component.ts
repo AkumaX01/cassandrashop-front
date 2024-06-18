@@ -9,7 +9,6 @@ import { AutenticacionLogService } from '../autenticacion-log.service';
 })
 export class ProductoCardComponent {
   @Input() producto: any;
-  @Output() productoAgregadoAlCarrito = new EventEmitter<any>();
 
   constructor(
     private carritoService: CarritoService,
@@ -23,7 +22,6 @@ export class ProductoCardComponent {
         const nombreUsuario = user.usuario;
         console.log(nombreUsuario)
         this.carritoService.addToCart(this.producto);
-        this.productoAgregadoAlCarrito.emit(); // Emitir evento cuando se agrega un producto al carrito
       }
     });
   }
