@@ -10,49 +10,73 @@ import { getUrl } from './utils/api';
 })
 export class DataService {
   private productos: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  private categorias: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
-    []
-  );
-  private productosLoaded: boolean = false; // Variable para controlar si los productos han sido cargados
+  productos$ = this.productos.asObservable();
 
   constructor(
     private http: HttpClient,
     private authService: AutenticacionLogService
   ) {}
 
-  obtenerProductos(): Observable<any[]> {
-    if (!this.productosLoaded) {
-      return this.authService.getToken().pipe(
-        switchMap((token) => {
-          if (!token) {
-            // Si no hay token, devuelve un observable vacío
-            return of([]);
-          }
+  loadProductos(sucursal: string | null): Observable<any[]> {
+    return this.authService.getToken().pipe(
+      switchMap((token) => {
+        if (!token) {
+          // Si no hay token, devuelve un observable vacío
+          return of([]);
+        }
 
-          const url = getUrl('products');
-          const headers = new HttpHeaders({
-            Authorization: `Bearer ${token}`,
-          });
+        const url = sucursal
+          ? getUrl(
+              `products?${new URLSearchParams({
+                sucursal: sucursal,
+              }).toString()}`
+            )
+          : getUrl('products');
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
 
-          return this.http.get<any[]>(url, { headers });
-        }),
-        switchMap((productos) => {
-          this.productos.next(productos); // Almacena los productos en la variable local
-          this.productosLoaded = true; // Marca los productos como cargados
-          return of(productos);
-        })
-      );
-    } else {
-      return this.productos.asObservable(); // Devuelve los productos almacenados en la variable local
-    }
+        return this.http.get<any[]>(url, { headers });
+      }),
+      switchMap((productos) => {
+        this.productos.next(productos); // Almacena los productos en la variable local
+        return of(productos);
+      })
+    );
   }
 
-  obtenerProductosPorCategoria(categoria: string): Observable<any[]> {
-    return this.obtenerProductos().pipe(
+  loadProductosPorCategoria(
+    sucursal: string | null,
+    categoria: string
+  ): Observable<any[]> {
+    return this.authService.getToken().pipe(
+      switchMap((token) => {
+        if (!token) {
+          // Si no hay token, devuelve un observable vacío
+          return of([]);
+        }
+
+        const url = sucursal
+          ? getUrl(
+              `products?${new URLSearchParams({
+                sucursal,
+                categoria: categoria,
+              }).toString()}`
+            )
+          : getUrl(
+              `products?${new URLSearchParams({
+                categoria: categoria,
+              }).toString()}`
+            );
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`,
+        });
+
+        return this.http.get<any[]>(url, { headers });
+      }),
       switchMap((productos) => {
-        return of(
-          productos.filter((producto) => producto.categoria === categoria)
-        );
+        this.productos.next(productos); // Almacena los productos en la variable local
+        return of(productos);
       })
     );
   }

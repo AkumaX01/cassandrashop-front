@@ -19,6 +19,7 @@ import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.componen
 import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MisVentasComponent } from './mis-ventas/mis-ventas.component';  // Asegúrate de importar ReactiveFormsModule
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
@@ -41,6 +42,7 @@ import { MisVentasComponent } from './mis-ventas/mis-ventas.component';  // Aseg
     MisVentasComponent
   ],
   imports: [
+    SweetAlert2Module.forRoot(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,

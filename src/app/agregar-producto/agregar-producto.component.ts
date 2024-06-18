@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AgregarProductoService } from '../agregar-producto.service';
+import { ProductoService } from '../producto.service';
 import { AutenticacionLogService } from '../autenticacion-log.service';
 import { DataService } from '../data.service';
 import { SucursalService } from '../sucursal.service';
@@ -20,7 +20,7 @@ export class AgregarProductoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private productoService: AgregarProductoService,
+    private productoService: ProductoService,
     private authService: AutenticacionLogService,
     private dataService: DataService,
     private sucursalesService: SucursalService
